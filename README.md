@@ -1,58 +1,106 @@
 # Kilo Gateway - Free Models
 
-[![Python](https://img.shields.io/badge/Python-3.14+-blue?style=flat&logo=python)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-00a859?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/PingGdevelop/kilocode-gateway-free-model?style=flat)](https://github.com/PingGdevelop/kilocode-gateway-free-model/stargazers)
+> Minimalist proxy gateway for browsing free AI models available on Kilo.ai API
 
-Free AI models browser for Kilo.ai gateway with a pixel-style dark/yellow themed web interface.
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/PingGdevelop/kilocode-gateway-free-model?style=flat-square)](https://github.com/PingGdevelop/kilocode-gateway-free-model/stargazers)
+[![Last Commit](https://img.shields.io/github/last-commit/PingGdevelop/kilocode-gateway-free-model?style=flat-square)](https://github.com/PingGdevelop/kilocode-gateway-free-model/commits/main)
 
-![Title Preview](assets/title%20preview.png)
+---
 
-![Models Preview](assets/preview%20model.png)
+## ✨ Features
 
-## Features
+- **FastAPI Backend** with proper async / await support
+- **Automatic caching** of upstream API responses (60s TTL)
+- Clean, minimalist paper-style web interface
+- Filter only free models from the Kilo.ai catalog
+- Structured logging and proper error handling
+- Standard `/health` endpoint for monitoring
+- OpenAPI documentation automatically available at `/docs`
+- Zero client-side dependencies
 
-- **Backend**: FastAPI server that fetches models from Kilo.ai API
-- **Frontend**: Clean, pixel-style dark/yellow themed web interface
-- **API Endpoints**:
-  - `GET /` - Web interface
-  - `GET /api/models` - All models from Kilo.ai
-  - `GET /api/models/free` - Free models only
+---
 
-## Quick Start
+## 🚀 Quick Start
 
+### Installation
 ```bash
+# Clone the repository
+git clone https://github.com/PingGdevelop/kilocode-gateway-free-model.git
+cd kilocode-gateway-free-model
+
 # Install dependencies
-pip install fastapi uvicorn httpx
+pip install fastapi uvicorn httpx aiofiles
 
 # Run the server
 python main.py
+
+# Optional: specify custom port
+python main.py --port 3000
 ```
 
-Open http://localhost:8000 in your browser.
+Then open http://localhost:8000 in your browser.
 
-## API Usage
+---
 
+## 📡 API Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /` | Web interface |
+| `GET /api/models` | Full unfiltered list of all models from Kilo.ai |
+| `GET /api/models/free` | Only free models, cleaned and formatted |
+| `GET /health` | Service health check |
+| `GET /docs` | Automatic OpenAPI documentation |
+| `GET /redoc` | Alternative API documentation |
+
+### Example usage
 ```bash
 # Get all free models
-curl http://localhost:8000/api/models/free
+curl -s http://localhost:8000/api/models/free | jq
 ```
 
-## Project Structure
+---
+
+## 📋 Project Structure
 
 ```
-kilocode-gateway/
-├── main.py          # FastAPI backend
+kilocode-gateway-free-model/
+├── main.py                 # FastAPI application
 ├── static/
-│   └── index.html   # Frontend interface
-├── assets/
-│   └── *.png        # Screenshots
-├── README.md
+│   └── index.html          # Minimalist web interface
+├── .gitignore
 ├── LICENSE
-└── .gitignore
+└── README.md
 ```
 
-## License
+---
 
-MIT License - see [LICENSE](LICENSE) for details.
+## 🔧 Configuration
+
+All configuration constants are defined at the top of `main.py`:
+
+```python
+KILO_API_URL = "https://api.kilo.ai/api/gateway/models"
+REQUEST_TIMEOUT = 10    # Upstream request timeout in seconds
+CACHE_TTL = 60          # Cache duration in seconds
+```
+
+---
+
+## 🛡️ Production deployment
+
+For production usage:
+- Use a proper ASGI server like `gunicorn`
+- Restrict CORS origins instead of `*`
+- Add rate limiting
+- Place behind a reverse proxy (nginx / caddy)
+- Set proper log levels
+
+---
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.

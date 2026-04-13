@@ -3,278 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kilo Gateway - Free Models</title>
+    <title>Kilo Free Models</title>
     <style>
-        @font-face {
-            font-family: 'Pixel';
-            src: local('Press Start 2P'), local('Courier New');
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         :root {
-            --bg-primary: #0d0d0d;
-            --bg-card: #141414;
-            --bg-card-hover: #1a1a1a;
-            --border: #333333;
-            --border-hover: #ffcc00;
-            --text-primary: #ffffff;
-            --text-secondary: #888888;
-            --accent: #ffcc00;
-            --accent-dark: #cca300;
-            --free-badge: #ffcc00;
-            --param-bg: #1a1a1a;
+            --paper: #f8f6f0;
+            --text: #1a1a1a;
+            --light: #888888;
+            --line: #e0ddd4;
+            --accent: #111111;
         }
-        
+
         body {
-            font-family: 'Courier New', monospace;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: var(--paper);
+            color: var(--text);
             min-height: 100vh;
-            padding: 2rem;
-            background-image: 
-                linear-gradient(0deg, transparent 24%, rgba(255, 204, 0, 0.03) 25%, rgba(255, 204, 0, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 204, 0, 0.03) 75%, rgba(255, 204, 0, 0.03) 76%, transparent 77%),
-                linear-gradient(90deg, transparent 24%, rgba(255, 204, 0, 0.03) 25%, rgba(255, 204, 0, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 204, 0, 0.03) 75%, rgba(255, 204, 0, 0.03) 76%, transparent 77%);
-            background-size: 50px 50px;
+            padding: 60px 20px;
+            line-height: 1.5;
         }
-        
+
         .container {
-            max-width: 1400px;
+            max-width: 900px;
             margin: 0 auto;
         }
-        
+
         header {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 1.5rem;
-            border: 3px solid var(--accent);
-            background: var(--bg-card);
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 30px;
         }
-        
+
         h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            text-shadow: 2px 2px 0 var(--accent-dark);
+            font-size: 2.2rem;
+            font-weight: normal;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
         }
-        
+
         .subtitle {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
+            color: var(--light);
+            font-size: 1rem;
         }
-        
-        .count-badge {
-            display: inline-block;
-            background: var(--free-badge);
-            color: #000;
-            padding: 0.4rem 1rem;
-            font-size: 0.8rem;
+
+        .count {
+            color: var(--accent);
             font-weight: bold;
-            margin-left: 1rem;
-            text-transform: uppercase;
         }
-        
+
         .loading {
             text-align: center;
-            padding: 4rem;
-            color: var(--accent);
-            font-size: 1rem;
-            text-transform: uppercase;
+            padding: 80px;
+            color: var(--light);
+            font-size: 1.1rem;
         }
-        
-        .loading::after {
-            content: '...';
-            animation: blink 1s steps(2) infinite;
-        }
-        
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-        
+
         .error {
+            padding: 20px;
+            border: 1px solid #e00;
+            color: #c00;
             text-align: center;
-            padding: 2rem;
-            background: #1a0000;
-            border: 2px solid #ff0000;
-            color: #ff6666;
-            font-size: 0.9rem;
-            text-transform: uppercase;
+            margin: 40px 0;
         }
-        
-        .models-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+
+        .models-list {
+            display: flex;
+            flex-direction: column;
             gap: 0;
         }
-        
-        .model-card {
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            padding: 1.5rem;
-            transition: all 0.1s;
-            position: relative;
+
+        .model-item {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--line);
+            transition: opacity 0.15s;
         }
-        
-        .model-card:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--accent);
+
+        .model-item:hover {
+            opacity: 0.7;
         }
-        
-        .model-card:hover .model-name {
-            color: var(--accent);
-        }
-        
-        .model-card:hover .free-badge {
-            background: #fff;
-            color: #000;
-        }
-        
-        .model-header {
+
+        .model-top {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
+            align-items: baseline;
+            margin-bottom: 6px;
         }
-        
+
         .model-name {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: color 0.1s;
+            font-size: 1.3rem;
+            font-weight: normal;
         }
-        
-        .free-badge {
-            background: var(--free-badge);
-            color: #000;
-            padding: 0.3rem 0.8rem;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: all 0.1s;
-        }
-        
+
         .model-id {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            font-family: 'Courier New', monospace;
-            background: var(--param-bg);
-            padding: 0.5rem 0.75rem;
-            margin-bottom: 1rem;
-            display: inline-block;
-            border-left: 3px solid var(--accent);
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--light);
+            margin-bottom: 12px;
         }
-        
-        .model-info {
+
+        .model-details {
             display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
+            gap: 18px;
+            font-size: 0.9rem;
+            color: var(--light);
+            margin-bottom: 12px;
         }
-        
-        .info-badge {
-            background: var(--param-bg);
-            color: var(--text-secondary);
-            padding: 0.4rem 0.6rem;
-            font-size: 0.7rem;
-            border: 1px solid var(--border);
-        }
-        
-        .info-badge.context {
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-        
-        .info-badge.modality {
-            color: #fff;
-            border-color: #666;
-        }
-        
-        .params-section {
-            border-top: 1px dashed var(--border);
-            padding-top: 1rem;
-            margin-top: 0.5rem;
-        }
-        
-        .params-title {
-            font-size: 0.65rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-bottom: 0.6rem;
-        }
-        
-        .params-grid {
+
+        .model-params {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.3rem;
+            gap: 6px;
         }
-        
+
         .param {
-            background: var(--param-bg);
-            color: var(--text-secondary);
-            padding: 0.3rem 0.5rem;
-            font-size: 0.65rem;
-            font-family: 'Courier New', monospace;
-            border: 1px solid var(--border);
-            transition: all 0.1s;
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: var(--light);
+            padding: 2px 6px;
+            border: 1px solid var(--line);
         }
-        
-        .param:hover {
-            background: var(--accent);
-            color: #000;
-            border-color: var(--accent);
+
+        .free-badge {
+            font-size: 0.75rem;
+            color: var(--light);
+            letter-spacing: 0.05em;
         }
-        
+
         .no-models {
             text-align: center;
-            padding: 4rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+            padding: 80px;
+            color: var(--light);
         }
-        
-        .pixel-decoration {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            background: var(--accent);
-            margin: 0 4px;
-            animation: pixelPulse 2s steps(4) infinite;
-        }
-        
-        @keyframes pixelPulse {
-            0%, 100% { opacity: 1; }
-            25% { opacity: 0.5; }
-            50% { opacity: 0.2; }
-            75% { opacity: 0.5; }
-        }
-        
-        @media (max-width: 480px) {
+
+        @media (max-width: 600px) {
             body {
-                padding: 1rem;
+                padding: 30px 15px;
             }
+
             h1 {
-                font-size: 1.4rem;
+                font-size: 1.8rem;
             }
-            .models-grid {
-                grid-template-columns: 1fr;
+
+            .model-details {
+                flex-direction: column;
+                gap: 4px;
             }
         }
     </style>
@@ -282,13 +159,13 @@
 <body>
     <div class="container">
         <header>
-            <h1><span class="pixel-decoration"></span> Kilo Gateway <span class="pixel-decoration"></span></h1>
-            <p class="subtitle">Free Models <span class="count-badge" id="count">--</span></p>
+            <h1>Kilo Free Models</h1>
+            <p class="subtitle">Liste de tous les modèles gratuits disponibles sur Kilo.ai <span class="count" id="count"></span></p>
         </header>
-        
-        <div id="loading" class="loading">Loading</div>
+
+        <div id="loading" class="loading">Chargement...</div>
         <div id="error" class="error" style="display: none;"></div>
-        <div id="models" class="models-grid"></div>
+        <div id="models" class="models-list"></div>
     </div>
 
     <script>
@@ -297,67 +174,60 @@
             const error = document.getElementById('error');
             const modelsDiv = document.getElementById('models');
             const countBadge = document.getElementById('count');
-            
+
             try {
                 const response = await fetch('/api/models/free');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
                 const data = await response.json();
                 const models = data.data || [];
-                
+
                 loading.style.display = 'none';
-                countBadge.textContent = models.length;
-                
+                countBadge.textContent = `(${models.length})`;
+
                 if (models.length === 0) {
-                    modelsDiv.innerHTML = '<div class="no-models">No free models found</div>';
+                    modelsDiv.innerHTML = '<div class="no-models">Aucun modèle gratuit trouvé</div>';
                     return;
                 }
-                
+
                 modelsDiv.innerHTML = models.map(model => `
-                    <div class="model-card">
-                        <div class="model-header">
-                            <div class="model-name">${model.name || 'Unknown Model'}</div>
-                            <span class="free-badge">Free</span>
+                    <div class="model-item">
+                        <div class="model-top">
+                            <div class="model-name">${model.name || 'Modèle inconnu'}</div>
+                            <span class="free-badge">Gratuit</span>
                         </div>
                         <div class="model-id">${model.id || ''}</div>
-                        <div class="model-info">
-                            ${model.context_length ? `<span class="info-badge context">${formatContextLength(model.context_length)} ctx</span>` : ''}
+
+                        <div class="model-details">
+                            ${model.context_length ? `<span>${formatContextLength(model.context_length)} tokens</span>` : ''}
                             ${model.architecture ? `
-                                <span class="info-badge modality">IN: ${model.architecture.input_modalities?.join(', ') || 'N/A'}</span>
-                                <span class="info-badge modality">OUT: ${model.architecture.output_modalities?.join(', ') || 'N/A'}</span>
+                                <span>IN: ${model.architecture.input_modalities?.join(', ') || '-'}</span>
+                                <span>OUT: ${model.architecture.output_modalities?.join(', ') || '-'}</span>
                             ` : ''}
                         </div>
+
                         ${model.supported_parameters && model.supported_parameters.length > 0 ? `
-                            <div class="params-section">
-                                <div class="params-title">Parameters</div>
-                                <div class="params-grid">
-                                    ${model.supported_parameters.map(p => `<span class="param">${p}</span>`).join('')}
-                                </div>
+                            <div class="model-params">
+                                ${model.supported_parameters.map(p => `<span class="param">${p}</span>`).join('')}
                             </div>
                         ` : ''}
                     </div>
                 `).join('');
-                
+
             } catch (err) {
                 loading.style.display = 'none';
                 error.style.display = 'block';
-                error.textContent = 'Error: ' + err.message;
+                error.textContent = 'Erreur: ' + err.message;
             }
         }
-        
+
         function formatContextLength(length) {
             if (!length) return '';
-            if (length >= 1000000) {
-                return (length / 1000000).toFixed(length % 1000000 === 0 ? 0 : 1) + 'M';
-            }
-            if (length >= 1000) {
-                return (length / 1000).toFixed(0) + 'K';
-            }
+            if (length >= 1000000) return (length / 1000000).toFixed(length % 1000000 === 0 ? 0 : 1) + 'M';
+            if (length >= 1000) return (length / 1000).toFixed(0) + 'K';
             return length;
         }
-        
+
         loadFreeModels();
     </script>
 </body>
